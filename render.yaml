@@ -2,8 +2,16 @@ services:
   - type: web
     name: library-management-system
     env: node
+    plan: free # Explicitly set to free tier
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
+    autoDeploy: true # Enable auto-deployment on git push
+    healthCheckPath: /api/test # Health check endpoint
+    # Free tier settings
+    disk:
+      name: tmp
+      mountPath: /tmp
+      sizeGB: 0.5 # Minimal size, free tier limitation
